@@ -78,6 +78,16 @@ listeLivres.addEventListener("click", function(event) {
         document.getElementById("status").value = livreAModifier.status;
         dialogue.showModal();
     }
+    else if (event.target.classList.contains("btn-supprimer")) {
+        const id = Number(event.target.dataset.id);
+        const confirmation = confirm("Voulez-vous vraiment supprimer ce livre ?");
+        if (confirmation) {
+            const index = livres.findIndex((livre) => livre.id === id);
+            livres.splice(index, 1);
+            localStorage.setItem("livres", JSON.stringify(livres));
+            rechercherLivres();
+        }
+    } 
 });
 
 formulaire.addEventListener("submit", function(event) {
