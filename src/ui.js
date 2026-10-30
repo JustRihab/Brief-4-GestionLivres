@@ -1,3 +1,4 @@
+import { obtenirStatut } from "./utils.js";
 export function afficherLivres(livres) {
     const listeLivres = document.getElementById("liste-livres");
     const messageVide = document.getElementById("message-vide");
@@ -34,14 +35,9 @@ export function afficherLivres(livres) {
             description.textContent = livre.description;
             carte.appendChild(description);
         }
-        const statuts = {
-            "to-read": "À lire",
-            "reading": "En cours de lecture",
-            "read": "Lu"
-        };
         const statut = document.createElement("p");
         statut.className = "mt-3 inline-block rounded-full bg-gray-100 px-3 py-1 text-sm font-medium text-gray-700";
-        statut.textContent = `Statut : ${statuts[livre.status]}`;
+        statut.textContent = `Statut : ${obtenirStatut(livre.status)}`;
         carte.appendChild(statut);
         const btnModifier = document.createElement("button");
         btnModifier.textContent = "Modifier";
