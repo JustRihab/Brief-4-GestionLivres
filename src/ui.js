@@ -48,6 +48,11 @@ export function afficherLivres(livres) {
         btnModifier.className = "btn-modifier mt-4 mx-4 bg-blue-600 rounded-full px-4 py-1 font-medium text-white hover:bg-blue-700";
         btnModifier.dataset.id = livre.id;
         carte.appendChild(btnModifier);
+        const btnSupprimer = document.createElement("button");
+        btnSupprimer.textContent = "Supprimer";
+        btnSupprimer.className = "btn-supprimer mt-3 mx-3 bg-red-700 rounded-full px-4 py-1 font-medium text-white hover:bg-red-800";
+        btnSupprimer.dataset.id = livre.id;
+        carte.appendChild(btnSupprimer);
         listeLivres.appendChild(carte);
     });
 }
