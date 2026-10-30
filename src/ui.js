@@ -43,6 +43,11 @@ export function afficherLivres(livres) {
         statut.className = "mt-3 inline-block rounded-full bg-gray-100 px-3 py-1 text-sm font-medium text-gray-700";
         statut.textContent = `Statut : ${statuts[livre.status]}`;
         carte.appendChild(statut);
+        const btnModifier = document.createElement("button");
+        btnModifier.textContent = "Modifier";
+        btnModifier.className = "btn-modifier mt-4 mx-4 bg-blue-600 rounded-full px-4 py-1 font-medium text-white hover:bg-blue-700";
+        btnModifier.dataset.id = livre.id;
+        carte.appendChild(btnModifier);
         listeLivres.appendChild(carte);
     });
 }
