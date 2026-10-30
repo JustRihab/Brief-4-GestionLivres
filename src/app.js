@@ -10,7 +10,44 @@ const titreInput = document.getElementById("title");
 const auteurInput = document.getElementById("author");
 const titreErreur = document.getElementById("title-erreur");
 const auteurErreur = document.getElementById("author-erreur");
+const rechercheInput = document.getElementById("recherche-livre");
+const triSelect = document.getElementById("tri-livres");
 
+function rechercherLivres() {
+    const recherche = rechercheInput.value.trim().toLowerCase();
+    let livresFiltres = livres.filter((livre) => {
+        return livre.title.toLowerCase().includes(recherche) ||
+               livre.author.toLowerCase().includes(recherche);
+    });
+    const ordre = triSelect.value;
+    livresFiltres.sort((a, b) => {
+        let valeurA;
+        let valeurB;
+        if (ordre === "titre") {
+            valeurA = a.title.toLowerCase();
+            valeurB = b.title.toLowerCase();
+        }
+        if (ordre === "auteur") {
+            valeurA = a.author.toLowerCase();
+            valeurB = b.author.toLowerCase();
+        }
+        if (ordre === "annee") {
+            valeurA = Number(a.year) || 0;
+            valeurB = Number(b.year) || 0;
+        }
+        if (valeurA > valeurB) {
+            return 1;
+        }
+        if (valeurA < valeurB) {
+            return -1;
+        }
+        return 0;
+    });
+    afficherLivres(livresFiltres);
+}
+
+rechercheInput.addEventListener("input", rechercherLivres);
+triSelect.addEventListener("change", rechercherLivres);
 
 btnAjouter.addEventListener("click", function() {
     dialogue.showModal();
