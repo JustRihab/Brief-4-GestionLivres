@@ -1,10 +1,11 @@
 export function afficherLivres(livres) {
     const listeLivres = document.getElementById("liste-livres");
+    const messageVide = document.getElementById("message-vide");
+    listeLivres.innerHTML = "";
     if (livres.length === 0) {
-        listeLivres.textContent = "Aucun livre pour le moment.";
+        listeLivres.appendChild(messageVide);
         return;
     }
-    listeLivres.innerHTML = "";
     livres.forEach((livre) => {
         const carte = document.createElement("div");
         carte.className ="rounded-xl border border-gray-200 bg-white p-5 shadow-sm";

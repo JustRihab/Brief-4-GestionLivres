@@ -1,5 +1,6 @@
 import { livres } from "./state.js";
 import { afficherLivres } from "./ui.js";
+afficherLivres(livres);
 
 const btnAjouter = document.getElementById("ouvrir-formulaire");
 const dialogue = document.getElementById("dialog-livre");
