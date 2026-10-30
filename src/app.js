@@ -6,12 +6,15 @@ const btnAjouter = document.getElementById("ouvrir-formulaire");
 const dialogue = document.getElementById("dialog-livre");
 const btnFermer = document.getElementById("fermer-formulaire");
 const formulaire = document.getElementById("formulaire-livre");
+const btnAjouterSidebar = document.getElementById("ouvrir-formulaire-sidebar");
 const titreInput = document.getElementById("title");
 const auteurInput = document.getElementById("author");
 const titreErreur = document.getElementById("title-erreur");
 const auteurErreur = document.getElementById("author-erreur");
 const rechercheInput = document.getElementById("recherche-livre");
 const triSelect = document.getElementById("tri-livres");
+const listeLivres = document.getElementById("liste-livres");
+let idLivreEnModification = null;
 
 function rechercherLivres() {
     const recherche = rechercheInput.value.trim().toLowerCase();
@@ -53,9 +56,29 @@ btnAjouter.addEventListener("click", function() {
     dialogue.showModal();
 });
 
+btnAjouterSidebar.addEventListener("click", function() {
+    dialogue.showModal();
+});
+
 btnFermer.addEventListener("click", function() {
     dialogue.close();
 }); 
+
+
+listeLivres.addEventListener("click", function(event) {
+    if (event.target.classList.contains("btn-modifier")) {
+        const id = Number(event.target.dataset.id);
+        const livreAModifier = livres.find((livre) => livre.id === id);
+        idLivreEnModification = id;
+        titreInput.value = livreAModifier.title;
+        auteurInput.value = livreAModifier.author;
+        document.getElementById("year").value = livreAModifier.year;
+        document.getElementById("genre").value = livreAModifier.genre;
+        document.getElementById("description").value = livreAModifier.description;
+        document.getElementById("status").value = livreAModifier.status;
+        dialogue.showModal();
+    }
+});
 
 formulaire.addEventListener("submit", function(event) {
     event.preventDefault();
@@ -100,9 +123,20 @@ formulaire.addEventListener("submit", function(event) {
         description: document.getElementById("description").value.trim(),
         status: document.getElementById("status").value
     };
+    if (idLivreEnModification === null) {
+    newBook.id = Date.now();
     livres.push(newBook);
+    }
+    else {
+    const index = livres.findIndex((livre) => livre.id === idLivreEnModification);
+    livres[index] = {
+        ...livres[index],
+        ...newBook
+    };
+    }
     localStorage.setItem("livres", JSON.stringify(livres));
-    afficherLivres(livres);
+    rechercherLivres();
+    idLivreEnModification = null;
     formulaire.reset();
     dialogue.close();
 });
@@ -122,3 +156,4 @@ auteurInput.addEventListener("input", function() {
         auteurInput.removeAttribute("aria-describedby");
     }
 });
+
