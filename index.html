@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Brief-4-Gestion-de-Livres</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+</head>
+<body class="bg-gray-100 text-gray-800 min-h-screen flex flex-col font-sans">
+    <div class="flex flex-col md:flex-row flex-1">
+        <aside class="bg-[#172A46] text-white p-5 w-full md:w-64 md:min-h-screen shrink-0 shadow-lg">
+            <div class="flex items-center gap-3 mb-8">
+                <img src="images/bookLogo.webp" alt="logo" class="w-10 h-10 object-contain">
+                <h1 class="text-xl font-bold tracking-wide">Book Manager</h1>
+            </div>
+            <nav class="flex flex-col gap-3">
+                <a href="#Accueil" class="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-blue-600 text-white font-medium hover:bg-blue-700 transition">
+                    <img src="images/home.png" alt="home" class="w-5 h-5 object-contain">
+                    <span>Accueil</span>
+                </a>
+                <a href="#add-livre" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-gray-300 font-medium hover:bg-slate-600 hover:text-white transition">
+                    <img src="images/add.png" alt="add" class="w-5 h-5 object-contain">
+                    <span>Ajouter un livre</span>
+                </a>
+                <a href="#collection" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-gray-300 font-medium hover:bg-slate-600 hover:text-white transition">
+                    <img src="images/bookshelf.png" alt="collection" class="w-5 h-5 object-contain">
+                    <span>Ma collection</span>
+                </a>
+            </nav>
+        </aside>
+        <main class="flex-1 p-6 md:p-8">
+            <div class="mb-6">
+                <h1 class="text-2xl md:text-3xl font-bold text-gray-900 flex items-center gap-2">Bienvenue! 👋</h1>
+                <p class="text-gray-500 mt-1">Voici un aperçu de votre collection de livres</p>
+            </div>
+            <section id="recherche" class="flex flex-col sm:flex-row gap-3 my-8">
+                <div class="flex flex-1 min-w-0 items-center gap-3 rounded-3xl border border-gray-300 bg-white px-4 py-3">
+                    <img src="images/searching.png" alt="searching icon" class="w-4 md:w-6 shrink-0">
+                    <input id="recherche-livre" type="search" placeholder="Rechercher par titre ou auteur..." class="w-full min-w-0 outline-none">
+                </div>
+                <button id="ouvrir-formulaire" type="button" class="w-full sm:w-auto rounded-3xl bg-indigo-600 px-5 py-3 text-white hover:bg-indigo-700 transition">+ Ajouter un livre</button>
+            </section>
+            <section id="collection" class="mt-2">
+                <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
+                    <div>
+                        <h1 class="text-2xl md:text-3xl font-bold text-gray-900 flex items-center gap-2">Ma collection</h1>
+                        <p class="text-gray-500 mt-1">Retrouvez et gérez tous vos livres</p>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <label for="tri-livres" class="text-sm text-gray-600 whitespace-nowrap">Trier par :</label>
+                        <select id="tri-livres" class="w-full sm:w-auto rounded-xl border border-gray-300 bg-white px-3 py-2 text-sm outline-none focus:border-indigo-500 transition shadow-xs cursor-pointer">
+                            <option value="titre">Titre</option>
+                            <option value="auteur">Auteur</option>
+                            <option value="annee">Année</option>
+                        </select>
+                    </div>
+                </div>
+                <div id="liste-livres" class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-5">
+                    <div id="message-vide" class=" col-span-full rounded-2xl border-2 border-dashed border-gray-300 bg-white p-8 md:p-12 text-center transition-all">
+                        <div class="mb-4 text-5xl">📚</div>
+                        <h3 class="text-lg font-semibold text-gray-800">Votre collection est vide</h3>
+                        <p class="mt-2 text-sm text-gray-500">Ajoutez votre premier livre pour commencer votre collection.</p>
+                    </div>
+                </div>
+            </section>
+            <dialog id="dialog-livre" class="m-auto w-[calc(100%-2rem)] max-w-xl rounded-2xl p-0 shadow-xl backdrop:bg-gray-900/50" >
+                <section id="ajouter-livre" class="mt-10 rounded-2xl bg-white p-5 shadow-sm md:p-6">
+                    <h2 class="mb-5 text-xl font-bold text-gray-900">Ajouter un nouveau livre </h2>
+                    <form id="formulaire-livre" novalidate class="flex flex-col gap-4">
+                        <div>
+                            <label for="title" class="mb-1 block text-sm font-medium">Titre du livre</label>
+                            <input id="title" name="title" type="text" placeholder="Entrez le titre de livre" class="w-full rounded-lg border border-gray-300 px-3 py-2 outline-none focus:border-indigo-500" required>
+                            <p id="title-erreur" class="mt-1 hidden text-sm text-red-700"></p>
+                        </div>
+                        <div>
+                            <label for="author" class="mb-1 block text-sm font-medium">Auteur</label>
+                            <input id="author" name="author" type="text" placeholder="Entrez le nom de l'auteur" class="w-full rounded-lg border border-gray-300 px-3 py-2 outline-none focus:border-indigo-500" required>
+                            <p id="author-erreur" class="mt-1 hidden text-sm text-red-700"></p>
+                        </div>
+                        <div>
+                            <label for="year" class="mb-1 block text-sm font-medium">Année de publication</label>
+                            <input id="year" name="year" type="number" min="1" step="1" placeholder="Entrez l'année de publication" class="w-full rounded-lg border border-gray-300 px-3 py-2 outline-none focus:border-indigo-500">
+                        </div>
+                        <div>
+                            <label for="genre" class="mb-1 block text-sm font-medium">Genre</label>
+                            <input id="genre" name="genre"type="text" placeholder="Entrez le genre de livre" class="w-full rounded-lg border border-gray-300 px-3 py-2 outline-none focus:border-indigo-500">
+                        </div>
+                        <div>
+                            <label for="description" class="mb-1 block text-sm font-medium">Description</label>
+                            <textarea id="description" name="description" placeholder="Ecrire une description de livre..." class="w-full rounded-lg border border-gray-300 px-3 py-2 outline-none focus:border-indigo-500"></textarea>
+                        </div>
+                        <div>
+                            <label for="status" class="mb-1 block text-sm font-medium">Status</label>
+                            <select id="status" name="status" class="w-full rounded-lg border border-gray-300 bg-white px-3 py-2 outline-none focus:border-indigo-500" required>
+                                <option value="to-read">À lire</option>
+                                <option value="reading">En cours de lecture</option>
+                                <option value="read">Lu</option>
+                            </select>
+                        </div>
+                        <div class="mt-5 flex justify-end gap-3">
+                            <button id="fermer-formulaire" type="button" class="rounded-lg border border-gray-300 px-4 py-2 hover:bg-gray-100">Annuler</button>
+                            <button type="submit" class="rounded-lg bg-indigo-600 px-4 py-2 text-white hover:bg-indigo-700">Enregistrer</button>
+                        </div>
+                    </form>
+                </section>
+            </dialog>
+        </main>
+    </div>
+    <script type="module" src="src/app.js"></script>
+</body>
+</html>
